@@ -180,6 +180,7 @@ def book_room():
                                 user_accounts[username]["balance"] -= price
                                 cashback = price * 0.30
                                 user_accounts[username]["balance"] += cashback
+                                user_accounts[username]["cashback"] += cashback
                                 hotel_info[room_type][branch][room_size]["Available"] -= 1
                                 user_accounts[username]["room_rented"] = {
                                     "Date Booked": now.strftime("%Y-%m-%d %H:%M:%S"),
@@ -214,8 +215,18 @@ def current_rented_room():
         else:
             print(f"\n{username} has no rented room.")
 
-def return_room
-
+def return_room():
+    if user_accounts[username]["room_rented"]:
+        room_type = user_accounts[username]["room_rented"]["Room Type"]
+        room_size = user_accounts[username]["room_rented"]["Room Size"]
+        branch = user_accounts[username]["room_rented"]["Branch"]
+        hotel_info[room_type][branch][room_size]["Available"] += 1
+        user_accounts[username]["room_rented"] = {}
+        print("\nYou have successfully checked out.")
+        break
+    else:
+        print("\nYou have no rented room.")
+    
 def manual_check_out():
     print ("\nCHECK OUT")
     while True:
@@ -224,20 +235,20 @@ def manual_check_out():
             if response.lower() == "n":
                 break
             elif response.lower() == "y":
-                if user_accounts[username]["room_rented"]:
-                    room_type = user_accounts[username]["room_rented"]["Room Type"]
-                    room_size = user_accounts[username]["room_rented"]["Room Size"]
-                    branch = user_accounts[username]["room_rented"]["Branch"]
-                    hotel_info[room_type][branch][room_size]["Available"] += 1
-                    user_accounts[username]["room_rented"] = {}
-                    print("\nYou have successfully checked out.")
-                    break
-                else:
-                    print("\nYou have no rented room.")
+                return_room()
+                break
             else:
                 print("\nInvalid Input! Please try again.")
         except ValueError as e:
             print (f"\nAn error occured: {e}")
+            
+def auto_check_out():
+    for username, details in user_accounts.items():
+        if details["room_rented"]:
+            check_out = details["room_rented"]["Check-out"]
+            if datetime.strptime(check_out, "%Y-%m-%d") == datetime.now():
+                return_room()
+                print(f"\n{username} has been automatically checked out.")
 
 def cancel_reservation():
     print ("\nCANCEL RESERVATION")
@@ -247,22 +258,12 @@ def cancel_reservation():
             if response.lower() == "n":
                 break
             elif response.lower() == "y":
-                if user_accounts[username]["room_rented"]:
-                    room_type = user_accounts[username]["room_rented"]["Room Type"]
-                    room_size = user_accounts[username]["room_rented"]["Room Size"]
-                    branch = user_accounts[username]["room_rented"]["Branch"]
-                    hotel_info[room_type][branch][room_size]["Available"] += 1
-                    user_accounts[username]["room_rented"] = {}
-                    print("\nYou have successfully cancelled your reservation.")
-                    break
-                else:
-                    print("\nYou have no reserved room.")
+                return_room()
+                break
             else:
                 print("\nInvalid Input! Please try again.")
         except ValueError as e:
             print (f"\nAn error occured: {e}")
-
-        
 
 def cash_in ():
     print ("\nCASH-IN")
@@ -275,14 +276,16 @@ def cash_in ():
                 print ("Amount should be greter than 0.")
             else:
                     user_accounts [username] ["balance"] += amount
-                    print(f"Successfully cashed in ${amount}.")
-                    print(f"\nCurrent balance for {username}: ${user_accounts[username]["balance"]}.")
+                    print(f"Successfully cashed in ₱{amount}.")
+                    print(f"\nCurrent balance for {username}: ₱{user_accounts[username]["balance"]}.")
                     break
         except ValueError as e:
             print (f"\nAn error occured: {e}")
 
+def view_wallet():
+    print ("\nVIEW WALLET")
+    print(f"\nCurrent balance for {username}: ₱{user_accounts[username]['balance']}.")
 
-book_room()
- 
-#user menu
-
+def view_cashback():
+    print ("\nVIEW CASHBACK")
+    print(f"\nCurrent accumulated cashbacks for {username}: ₱{user_accounts[username]['cashback']}.")
