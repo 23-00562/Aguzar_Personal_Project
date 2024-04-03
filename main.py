@@ -1,6 +1,6 @@
-import datetime
+from datetime import datetime
 
-now = datetime.datetime.now()
+now = datetime.now()
 
 user_accounts ={}
 
@@ -55,7 +55,8 @@ def register():
                         "password": password,
                         "full_name": full_name,
                         "contact_number": contact_number,
-                        "wallet": 0,
+                        "balance": 0,
+                        "cashback":0,
                         "room_rented": {}
                     }
                     print("\nYou have successfully created your account!")
@@ -135,7 +136,7 @@ def available_room():
     for room, details in room_details_standard.items():
         available = details["Available"]
         price = details["Price"]
-        print(f"Room: {room}")
+        print(f"Room Size: {room}")
         print(f"Available Units: {available}")
         print(f"Daily Rate: {price}")
         print(design_1*3)
@@ -145,13 +146,143 @@ def available_room():
     for room, details in room_details_deluxe.items():
         available = details["Available"]
         price = details["Price"]
-        print(f"Room: {room}")
+        print(f"Room Size: {room}")
         print(f"Available: {available}")
         print(f"Price: {price}")
         print(design_1*3)
 
+def book_room():
+    print ("Book a Room")
+    available_room()
+    while True:
+        try:
+            if user_accounts[username]["room_rented"]:
+                print ("\nYou have already rented a room. Please check out first.")
+                break
+            else:
+                room_type = input ("\nSelect Room Type (Standard/Deluxe|Press Enter to go Back): ")
+                if not room:
+                    return
+                elif room not in hotel_info:
+                    print ("\n Room not Found! Choose a Valid Room Type.")
+                else:
+                    room_size = input ("\nSelect Room Type (Single/Double/Suite): ")
+                    if room_size not in hotel_info[room_type][branch]:
+                        print ("\nRoom not Found! Choose a Valid Room Size.")
+                    else:
+                        if hotel_info[room_type][branch][room_size]["Available"] > 0:
+                            check_in = input("\nEnter Check-in Date (YYYY-MM-DD): ")
+                            check_out = input("\nEnter Check-out Date (YYYY-MM-DD): ")
+                            days_stay = (datetime.strptime(check_out, "%Y-%m-%d") - datetime.strptime(check_in, "%Y-%m-%d")).days
+                            balance = user_accounts[username]["balance"]
+                            price = hotel_info[room_type][branch][room_size]["Price"]* days_stay
+                            if balance > price:
+                                user_accounts[username]["balance"] -= price
+                                cashback = price * 0.30
+                                user_accounts[username]["balance"] += cashback
+                                hotel_info[room_type][branch][room_size]["Available"] -= 1
+                                user_accounts[username]["room_rented"] = {
+                                    "Date Booked": now.strftime("%Y-%m-%d %H:%M:%S"),
+                                    "Check-in": check_in,
+                                    "Check-out": check_out,
+                                    "Days of Stay": days_stay,
+                                    "Branch": branch,
+                                    "Room Type": room_type,
+                                    "Room Size": room_size,
+                                    "Price": price,
+                                }
+                                print("\nYou have successfully booked a room!")
+                                print(f"You have earned ₱{cashback} cashback. ")
+                                print(f"\nYour current balance is ₱{user_accounts[username]['balance']}.")
+                                print("To see further details proceed to 'Current Rented Room'.")
+                                break
+                            else:
+                                print ("\nInsufficient Balance! Please deposit money to your account.")
+                        else:
+                            print ("\nRoom is not available. Please choose another room.")
+        except ValueError as e:
+            print (f"\nAn error occured: {e}")
 
-available_price_room()
+def current_rented_room():
+    print ("\nCURRENT RENTED ROOM")
+    print ("\nTo Check in, please proceed to the front desk.")
+    for username, details in user_accounts.items():
+        if details["room_rented"]:
+            print(f"\n{username} rented a room.")
+            for key, value in details["room_rented"].items():
+                print(f"{key}: {value}")
+        else:
+            print(f"\n{username} has no rented room.")
 
+def return_room
+
+def manual_check_out():
+    print ("\nCHECK OUT")
+    while True:
+        try:
+            response = input("\nDo you want to check out? (y/n): ")
+            if response.lower() == "n":
+                break
+            elif response.lower() == "y":
+                if user_accounts[username]["room_rented"]:
+                    room_type = user_accounts[username]["room_rented"]["Room Type"]
+                    room_size = user_accounts[username]["room_rented"]["Room Size"]
+                    branch = user_accounts[username]["room_rented"]["Branch"]
+                    hotel_info[room_type][branch][room_size]["Available"] += 1
+                    user_accounts[username]["room_rented"] = {}
+                    print("\nYou have successfully checked out.")
+                    break
+                else:
+                    print("\nYou have no rented room.")
+            else:
+                print("\nInvalid Input! Please try again.")
+        except ValueError as e:
+            print (f"\nAn error occured: {e}")
+
+def cancel_reservation():
+    print ("\nCANCEL RESERVATION")
+    while True:
+        try:
+            response = input("\nDo you want to cancel your reservation? (y/n): ")
+            if response.lower() == "n":
+                break
+            elif response.lower() == "y":
+                if user_accounts[username]["room_rented"]:
+                    room_type = user_accounts[username]["room_rented"]["Room Type"]
+                    room_size = user_accounts[username]["room_rented"]["Room Size"]
+                    branch = user_accounts[username]["room_rented"]["Branch"]
+                    hotel_info[room_type][branch][room_size]["Available"] += 1
+                    user_accounts[username]["room_rented"] = {}
+                    print("\nYou have successfully cancelled your reservation.")
+                    break
+                else:
+                    print("\nYou have no reserved room.")
+            else:
+                print("\nInvalid Input! Please try again.")
+        except ValueError as e:
+            print (f"\nAn error occured: {e}")
+
+        
+
+def cash_in ():
+    print ("\nCASH-IN")
+    while True:
+        try:
+            amount = float(input ("\nEnter the amount you want to cash in (Press ENTER to go Back): "))
+            if not amount:
+                return
+            elif amount <= 0:
+                print ("Amount should be greter than 0.")
+            else:
+                    user_accounts [username] ["balance"] += amount
+                    print(f"Successfully cashed in ${amount}.")
+                    print(f"\nCurrent balance for {username}: ${user_accounts[username]["balance"]}.")
+                    break
+        except ValueError as e:
+            print (f"\nAn error occured: {e}")
+
+
+book_room()
+ 
 #user menu
 
