@@ -295,7 +295,7 @@ def return_room(username):
     else:
         print("\nYou have no rented room.")
     
-def manual_check_out(username):
+def check_out(username):
     print ("\nCHECK OUT")
     while True:
         try:
@@ -309,14 +309,6 @@ def manual_check_out(username):
                 print("\nInvalid Input! Please try again.")
         except ValueError as e:
             print (f"\nAn error occured: {e}")
-            
-def auto_check_out():
-    for username, details in user_accounts.items():
-        if details["room_rented"]:
-            check_out = details["room_rented"]["Check-out"]
-            if datetime.strptime(check_out, "%Y-%m-%d") < datetime.now():
-                return_room(username)
-                print(f"\n{username} has been automatically checked out.")
 
 def cancel_reservation(username):
     print ("\nCANCEL RESERVATION")
@@ -545,7 +537,7 @@ def user_menu(username):
         elif choice == "3":
             current_rented_room(username)
         elif choice == "4":
-            manual_check_out(username)
+            check_out(username)
         elif choice == "5":
             cash_in(username)
         elif choice == "6":
