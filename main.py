@@ -106,7 +106,7 @@ def admin_login():
             else:
                 password = str (input("Enter your Password: "))
                 if password == admin_password:
-                    print ('\nWelcome to Azure Bay Hotel: Admin Panel')
+                    print ('\nWelcome to Azure Bay Hotel: Admin')
                     admin_menu()
                     break
                 else:
@@ -158,7 +158,7 @@ def branch_hotel():
         print (f"{i+1}. " + hotel_branches[i])
 
 def available_room():
-    print ("CHECK AVAILABLE ROOMS AND PRICES\n")
+    print ("\nCHECK AVAILABLE ROOMS AND PRICES")
     branch_hotel()
     branch = input ("\nSelect Hotel Branch (Press ENTER to go back): ")
     if not branch:
@@ -392,16 +392,45 @@ def view_feedback():
         print(f"\n{user}: {'★ ' * int(average_rating)}")
 
 def add_branch():
-    print("\nADD BRANCH")
-    branch = input("\nEnter the location of the branch: ")
-    if branch in hotel_branches:
-        print("\nBranch already exists.")
-    else:
-        hotel_branches.append(branch)
-        hotel_info["Standard"][branch] = {"Single": {"Available": 0, "Price": 0}, 
-                   "Double": {"Available": 0, "Price": 0}, 
-                   "Suite": {"Available": 0, "Price": 0}}
-        print("\nBranch has been added.")
+    while True:
+        try:
+            print("\nADD BRANCH")
+            branch = input("\nEnter the location of the branch (Press Enter to go Back): ")
+            if not branch:
+                return
+            elif branch in hotel_branches:
+                print("\nBranch already exists.")
+            else:
+                hotel_branches.append(branch)
+                hotel_info["Standard"][branch] = {"Single": {"Available": 0, "Price": 0}, 
+                        "Double": {"Available": 0, "Price": 0}, 
+                        "Suite": {"Available": 0, "Price": 0}}
+                hotel_info["Deluxe"][branch] = {"Single": {"Available": 0, "Price": 0},
+                            "Double": {"Available": 0, "Price": 0},
+                            "Suite": {"Available": 0, "Price": 0}}
+                print("\nBranch has been added.")
+                modify_branch = input(f"\nDo you want to modify the number of rooms of {branch} Branch? (y/n): ")
+                if modify_branch.lower() == "y":
+                    room_type = input("\nEnter Room Type (Standard/Deluxe): ")
+                    if room_type not in hotel_info:
+                        print("\nRoom not found! Choose a valid room type.")
+                    else:
+                        room_size = input("\nEnter Room Size (Single/Double/Suite): ")
+                        if room_size not in hotel_info[room_type][branch]:
+                            print("\nRoom not found! Choose a valid room size.")
+                        else:
+                            amount = int(input("\nEnter the number of available rooms: "))
+                            price = int(input("\nEnter the price of the room: "))
+                            hotel_info[room_type][branch][room_size]["Available"] = amount
+                            hotel_info[room_type][branch][room_size]["Price"] = price
+                            print(f"\n{amount} rooms has been added to {room_size} Room, {room_type} Type in {branch} Branch with a price of {price} per unit.") 
+                elif modify_branch.lower() == "n":
+                    return
+                else:
+                    print("\nInvalid Input!")
+        except ValueError as e:
+            print(f"\nAn error occurred: {e}")
+
 
 def modify_room():
     print("\nMODIFY ROOM")
@@ -423,17 +452,15 @@ def modify_room():
                 action = input("\nChoose an action (Add/Decrease): ")
                 if action.lower() == "add":
                     amount = int(input("\nEnter the number of available rooms: "))
-                    price = float(input("Enter the daily rate: "))
                     hotel_info[room_type][branch][room_size]["Available"] += amount
-                    hotel_info[room_type][branch][room_size]["Price"] = price
-                    print(f"\n {amount} rooms has been added to {room_size} Room, {room_type} Type in {branch} Branch.")
+                    print(f"\n{amount} rooms has been added to {room_size} Room, {room_type} Type in {branch} Branch.")
                 elif action.lower() == "decrease":
                     amount = int(input("\nEnter the number of rooms to decrease: "))
                     if amount > hotel_info[room_type][branch][room_size]["Available"]:
                         print("\nInvalid input! Number of rooms to decrease is greater than the available rooms.")
                     else:
                         hotel_info[room_type][branch][room_size]["Available"] -= amount
-                        print(f"\n {amount} rooms has been added to {room_size} Room, {room_type} Type in {branch} Branch.")
+                        print(f"\n{amount} rooms has been added to {room_size} Room, {room_type} Type in {branch} Branch.")
                 else:
                     print("\nInvalid action! Please choose either 'Add' or 'Decrease'.")
 
@@ -456,7 +483,21 @@ def edit_price_room():
             else:
                 price = float(input("\nEnter the new daily rate: "))
                 hotel_info[room_type][branch][room_size]["Price"] = price
-                print(f"\nPrice of {room_size} Room, {room_type} Type in {branch} Branch has been updated.")    
+                print(f"\nPrice of {room_size} Room, {room_type} Type in {branch} Branch has been updated to {price} per unit.")  
+
+def remove_branch():
+    print("\nREMOVE BRANCH")
+    branch_hotel()
+    branch = input("\nEnter the location of the branch to remove (Press ENTER to go back): ")
+    if not branch:
+        return
+    elif branch not in hotel_branches:
+        print("\nBranch not found! Please try again.")
+    else:
+        hotel_branches.remove(branch)
+        hotel_info["Standard"].pop(branch)
+        hotel_info["Deluxe"].pop(branch)
+        print(f"\n{branch} Branch has been removed.")  
 
 def admin_menu():
     while True:
@@ -465,7 +506,8 @@ def admin_menu():
         print("2. Add Branch")
         print("3. Modify Number of Rooms")
         print("4. Edit Price of Rooms")
-        print("5. Exit")
+        print("5. Remove Branch")
+        print("6. Exit")
         choice = input("\nEnter your choice: ")
         if choice == "1":
             available_room()
@@ -476,6 +518,8 @@ def admin_menu():
         elif choice == "4":
             edit_price_room()
         elif choice == "5":
+            remove_branch()
+        elif choice == "6":
             break
         else:
             print("Invalid choice. Please try again.")
