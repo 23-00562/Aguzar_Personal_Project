@@ -40,6 +40,8 @@ hotel_info = {
     }
 }
 
+feedbacks = {}
+
 design_1 = '~' * 10
 
 admin_username = "admin"
@@ -152,10 +154,6 @@ def hotel_amenities():
     print("Balcony with an Accent table with 2 Chairs, Window/Split AC,")
     print("Mini Fridge, and an attached washroom with hot/cold water.\n")
 
-
-def view_feedback():
-    pass
-
 def branch_hotel():
     print("\nHOTEL BRANCHES: \n")
     for i in range (len(hotel_branches)):
@@ -251,7 +249,7 @@ def book_room(username):
                                 price = hotel_info[room_type][branch][room_size]["Price"]* days_stay
                                 if balance > price:
                                     user_accounts[username]["balance"] -= price
-                                    cashback = price * 0.30
+                                    cashback = price * 0.10
                                     user_accounts[username]["balance"] += cashback
                                     user_accounts[username]["cashback"] += cashback
                                     hotel_info[room_type][branch][room_size]["Available"] -= 1
@@ -299,6 +297,7 @@ def return_room(username):
         hotel_info[room_type][branch][room_size]["Available"] += 1
         user_accounts[username]["room_rented"] = {}
         print("\nYou have successfully checked out.")
+        feedback()
     else:
         print("\nYou have no rented room.")
     
@@ -364,6 +363,39 @@ def view_wallet(username):
 def view_cashback(username):
     print ("\nVIEW CASHBACK")
     print(f"\nCurrent accumulated cashbacks for {username}: ₱{user_accounts[username]['cashback']}.")
+
+
+def feedback():
+    while True:
+        try:
+            response = input("\nDo you want to rate our service? (y/n): ")
+            if response.lower() == "n":
+                break
+            elif response.lower() == "y":
+                print("\nCUSTOMER FEEDBACK")
+                user = input("\nEnter your name: ")
+                rating = int(input("Rate our service from 1 to 5 stars: "))
+                if rating < 1 or rating > 5:
+                    print("Invalid rating! Please rate from 1 to 5 stars.")
+                else:
+                    if user in feedbacks:
+                        feedbacks[user].append(rating)
+                    else:
+                        feedbacks[user] = [rating]
+                    print("\nThank you for your feedback!")
+                    break
+            else:
+                print("\nInvalid Input! Please try again.")
+        except ValueError as e:
+            print(f"\nAn error occurred: {e}")
+
+def view_feedback():
+    print("\nVIEW FEEDBACK")
+    print("\nFeedbacks: ")
+
+    for user, ratings in feedbacks.items():
+        average_rating = sum(ratings) / len(ratings)
+        print(f"\n{user}: {'★ ' * int(average_rating)}")
 
 def user_menu(username):
     while True:
