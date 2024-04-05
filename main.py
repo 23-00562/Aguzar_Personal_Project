@@ -8,8 +8,8 @@ user_accounts ={"joel": {
                         "password": "12345678",
                         "full_name": "dbsljdb",
                         "contact_number": "contact_number",
-                        "balance": 10000000,
-                        "cashback":0,
+                        "balance": 10000000.00,
+                        "cashback":0.00,
                         "room_rented": {}
                     }
                 }
@@ -42,12 +42,16 @@ hotel_info = {
     }
 }
 
+spacing = " " * 19
 design_1 = '~' * 10
+design_2 = '=' * 10
+design_3 = '-' * 10
 
 admin_username = "admin"
 admin_password = "adminhotel01"
 
 def register():
+    hotel_header()
     print ("\nREGISTER")
     while True:
         try:
@@ -70,11 +74,13 @@ def register():
                         "room_rented": {}
                     }
                     print("\nYou have successfully created your account!")
+                    print(f"Welcome to Azure Bay Hotel, {full_name}! Please log in to continue.")
                     break
         except ValueError as e:
             print (f"\nAn error occured: {e}")
 
 def user_login():
+    hotel_header()
     print ("\nLOG IN")
     while True:
         try:
@@ -86,7 +92,8 @@ def user_login():
             else:
                 password = str (input("Enter your Password: "))
                 if user_accounts [username] ["password"] == password:
-                    print ('\nWelcome to Azure Bay Hotel')
+                    print (f"\nYou have successfully logged in!")
+                    print ('Welcome to Azure Bay Hotel')
                     user_menu(username)
                     break
                 else:
@@ -95,6 +102,7 @@ def user_login():
             print (f"\nAn error occured: {e}")
 
 def admin_login():
+    hotel_header()
     print ("\nADMIN LOG IN")
     while True:
         try:
@@ -106,7 +114,7 @@ def admin_login():
             else:
                 password = str (input("Enter your Password: "))
                 if password == admin_password:
-                    print ('\nWelcome to Azure Bay Hotel: Admin')
+                    print (f'\nWelcome to Azure Bay Hotel: {username}')
                     admin_menu()
                     break
                 else:
@@ -115,10 +123,11 @@ def admin_login():
             print (f"\nAn error occured: {e}")
 
 def hotel_amenities():
+    hotel_header()
     print("\n         ------- HOTEL ROOMS INFO -------")
     print("")
-    print("         ------ SATNDARD ROOMS INFO ------")
-    print("STANDARD (Single)")
+    print("         ------ STANDARD ROOMS INFO ------")
+    print("\nSTANDARD (Single)")
     print("---------------------------------------------------------------")
     print("Room amenities include: 1 Single Bed, Television, Telephone,")
     print("Double-Door Cupboard, 1 Coffee table with 1 sofa, Window/Split AC")
@@ -158,7 +167,7 @@ def branch_hotel():
         print (f"{i+1}. " + hotel_branches[i])
 
 def available_room():
-    print ("\nCHECK AVAILABLE ROOMS AND PRICES")
+    print (f"\n{design_3*2} CHECK AVAILABLE ROOMS AND PRICES {design_3*2}")
     branch_hotel()
     branch = input ("\nSelect Hotel Branch (Press ENTER to go back): ")
     if not branch:
@@ -208,7 +217,7 @@ def check_dates():
 
 
 def book_room(username):
-    print ("Book a Room")
+    print (f"\n{design_1 * 3} BOOK A ROOM {design_1 * 3}")
     while True:
         try:
             if user_accounts[username]["room_rented"]:
@@ -216,23 +225,17 @@ def book_room(username):
                 break
             else:
                 branch_hotel()
-                branch = input ("\nSelect Hotel Branch (Enter the number|Press ENTER to go back): ")
+                branch = input ("\nSelect Hotel Branch (Press ENTER to go back): ")
                 if not branch:
                     return
+                elif branch not in hotel_branches:
+                    print (f"\n{branch} is not a valid branch. Please try again.")
                 else:
-                    if branch == "1":
-                        branch = hotel_branches[0]
-                    elif branch == "2":
-                        branch = hotel_branches[1]
-                    elif branch == "3":
-                        branch = hotel_branches[2]
-                    else:
-                        print ("Invalid Input")
-                    room_type = input ("\nSelect Room Type (Standard/Deluxe): ")
+                    room_type = input ("Select Room Type (Standard/Deluxe): ")
                     if room_type not in hotel_info:
                         print ("\n Room not Found! Choose a Valid Room Type.")
                     else:
-                        room_size = input ("\nSelect Room Type (Single/Double/Suite): ")
+                        room_size = input ("Select Room Type (Single/Double/Suite): ")
                         if room_size not in hotel_info[room_type][branch]:
                             print ("\nRoom not Found! Choose a Valid Room Size.")
                         else:
@@ -257,11 +260,13 @@ def book_room(username):
                                         "Room Size": room_size,
                                         "Price": price,
                                     }
+                                    print (f"\n{design_1 * 7}")
                                     print("\nYou have successfully booked a room!")
                                     print(f"\nYou have paid ₱{price}.")
                                     print(f"You have earned ₱{cashback} cashback. ")
-                                    print(f"Your current balance is ₱{user_accounts[username]['balance']}.")
-                                    print("\nTo see further details proceed to 'Current Rented Room'.")
+                                    print(f"Your current balance is ₱{user_accounts[username]['balance']}")
+                                    print("\nTo see further details proceed to 'View Current Rented Room'.")
+                                    print (f"\n{design_1 * 7}")
                                     break
                                 else:
                                     print ("\nInsufficient Balance! Please deposit money to your account.")
@@ -271,11 +276,11 @@ def book_room(username):
             print (f"\nAn error occured: {e}")
 
 def current_rented_room(username):
-    print ("\nCURRENT RENTED ROOM")
+    print (f"\n{design_1 * 3} CURRENT RENTED ROOM {design_1 * 3}")
     print ("\nTo Check in, please proceed to the front desk.")
     for username, details in user_accounts.items():
         if details["room_rented"]:
-            print(f"\n{username} rented a room.")
+            print(f"\n{username} rented a room.\n")
             for key, value in details["room_rented"].items():
                 if key == "Price":
                     value = "₱" + str(value)
@@ -295,8 +300,8 @@ def return_room(username):
     else:
         print("\nYou have no rented room.")
     
-def check_out(username):
-    print ("\nCHECK OUT")
+def perform_check_out(username):
+    print (f"\n{design_1 * 3} CHECK OUT {design_1 * 3}")
     while True:
         try:
             response = input("\nDo you want to check out? (y/n): ")
@@ -308,10 +313,10 @@ def check_out(username):
             else:
                 print("\nInvalid Input! Please try again.")
         except ValueError as e:
-            print (f"\nAn error occured: {e}")
+            print (f"\nAn error occurred: {e}")
 
 def cancel_reservation(username):
-    print ("\nCANCEL RESERVATION")
+    print (f"\n{design_1 * 3} CANCEL RESERVATION {design_1 * 3}")
     while True:
         try:
             response = input("\nDo you want to cancel your reservation? (y/n): ")
@@ -326,7 +331,7 @@ def cancel_reservation(username):
             print (f"\nAn error occured: {e}")
 
 def cash_in (username):
-    print ("\nCASH-IN")
+    print (f"\n{design_1 * 3} CASH-IN {design_1 * 3}")
     while True:
         try:
             amount = float(input ("\nEnter the amount you want to cash in (Press ENTER to go Back): "))
@@ -343,13 +348,12 @@ def cash_in (username):
             print (f"\nAn error occured: {e}")
 
 def view_wallet(username):
-    print ("\nVIEW WALLET")
+    print (f"\n{design_1 * 3} VIEW WALLET {design_1 * 3}")
     print(f"\nCurrent balance for {username}: ₱{user_accounts[username]['balance']}.")
 
 def view_cashback(username):
-    print ("\nVIEW CASHBACK")
+    print (f"\n{design_1 * 3} VIEW CASHBACK {design_1 * 3}")
     print(f"\nCurrent accumulated cashbacks for {username}: ₱{user_accounts[username]['cashback']}.")
-
 
 def feedback():
     while True:
@@ -376,17 +380,20 @@ def feedback():
             print(f"\nAn error occurred: {e}")
 
 def view_feedback():
+    hotel_header()
     print("\nVIEW FEEDBACK")
     print("\nFeedbacks: ")
-
-    for user, ratings in feedbacks.items():
-        average_rating = sum(ratings) / len(ratings)
-        print(f"\n{user}: {'★ ' * int(average_rating)}")
+    if feedbacks:
+        for user, ratings in feedbacks.items():
+            average_rating = sum(ratings) / len(ratings)
+            print(f"\n{user}: {'★ ' * int(average_rating)}")
+    else:
+        print("Sorry, there is no available feedback yet.")
 
 def add_branch():
     while True:
         try:
-            print("\nADD BRANCH")
+            print(f"\n{design_3*2} ADD BRANCH {design_3*2}")
             branch = input("\nEnter the location of the branch (Press Enter to go Back): ")
             if not branch:
                 return
@@ -425,7 +432,7 @@ def add_branch():
 
 
 def modify_room():
-    print("\nMODIFY ROOM")
+    print(f"\n{design_3*2} MODIFY ROOM {design_3*2}")
     branch_hotel()
     branch = input("\nSelect Hotel Branch (Press ENTER to go back): ")
     if not branch:
@@ -457,7 +464,7 @@ def modify_room():
                     print("\nInvalid action! Please choose either 'Add' or 'Decrease'.")
 
 def edit_price_room():
-    print("\nEDIT PRICE OF ROOM")
+    print(f"\n{design_3*2} EDIT PRICE OF ROOM {design_3*2}")
     branch_hotel()
     branch = input("\nSelect Hotel Branch (Press ENTER to go back): ")
     if not branch:
@@ -478,7 +485,7 @@ def edit_price_room():
                 print(f"\nPrice of {room_size} Room, {room_type} Type in {branch} Branch has been updated to {price} per unit.")  
 
 def remove_branch():
-    print("\nREMOVE BRANCH")
+    print(f"\n{design_3*2} REMOVE BRANCH {design_3*2}")
     branch_hotel()
     branch = input("\nEnter the location of the branch to remove (Press ENTER to go back): ")
     if not branch:
@@ -491,16 +498,28 @@ def remove_branch():
         hotel_info["Deluxe"].pop(branch)
         print(f"\n{branch} Branch has been removed.")  
 
+def display_time():
+        current_date = now.strftime('%Y-%m-%d')
+        current_time = now.strftime('%H:%M:%S')
+        print(f"\nDate: {current_date}")
+        print(f"Time: {current_time}")
+
+def hotel_header():
+    print (f'\n{design_3*6}')
+    print (f"{spacing} AZURE BAY HOTEL")
+    print (f'{design_3*6}')
+
 def admin_menu():
     while True:
+        hotel_header()
         print("\nADMIN MENU")
-        print("1. View Available Rooms")
+        print("\n1. View Available Rooms")
         print("2. Add Branch")
         print("3. Modify Number of Rooms")
         print("4. Edit Price of Rooms")
         print("5. Remove Branch")
         print("6. Exit")
-        choice = input("\nEnter your choice: ")
+        choice = input("\nEnter the number corresponding to your choice: ")
         if choice == "1":
             available_room()
         elif choice == "2":
@@ -512,20 +531,21 @@ def admin_menu():
         elif choice == "5":
             remove_branch()
         elif choice == "6":
+            print("Exiting Admin Menu. Goodbye!")
             break
         else:
             print("Invalid choice. Please try again.")
 
-
 def user_menu(username):
     while True:
-        print("\nUSER MENU")
-        print("1. View Available Rooms and Prices")
+        hotel_header()
+        print(f"\nUSER MENU")
+        print("\n1. View Available Rooms and Prices")
         print("2. Book a Room")
-        print("3. Current Rented Room")
-        print("4. Manual Check Out")
+        print("3. View Current Rented Room")
+        print("4. Check Out")
         print("5. Cash In")
-        print("6. View Wallet")
+        print("6. View Wallet Balance")
         print("7. View Cashback")
         print("8. Cancel Reservation")
         print("9. Log Out")
@@ -537,7 +557,7 @@ def user_menu(username):
         elif choice == "3":
             current_rented_room(username)
         elif choice == "4":
-            check_out(username)
+            perform_check_out(username)  # Renamed the function to avoid conflict with variable name
         elif choice == "5":
             cash_in(username)
         elif choice == "6":
@@ -547,20 +567,24 @@ def user_menu(username):
         elif choice == "8":
             cancel_reservation(username)
         elif choice == "9":
+            print(f"Exiting User Menu. Goodbye {username}!")
             break
         else:
-            print("Invalid Input! Please try again.")
+            print("Invalid Input! Please enter a number from 1 to 9.")
 
 def main():
     while True:
-        print("\nMAIN MENU")
-        print("1. Register")
+        print (f"\n{design_2} WELCOME TO AZURE BAY HOTEL {design_2}")
+        display_time()
+        print("\nSERVICES OFFERED: ")
+        print("\n1. Register as a New User")
         print("2. User Log In")
         print("3. Admin Log In")
-        print("4. Hotel Amenities")
-        print("5. View Feedback")
+        print("4. Explore Hotel Amenities")
+        print("5. View Customer Feedbacks")
         print("6. Exit")
-        choice = input("\nEnter your choice: ")
+        print("\nHow can we assist you today?")
+        choice = input("\nEnter the number corresponding to your choice: ")
         if choice == "1":
             register()
         elif choice == "2":
@@ -572,8 +596,10 @@ def main():
         elif choice == "5":
             view_feedback()
         elif choice == "6":
+            print("\nThank you for staying with us. Have a Nice Day! Goodbye!")
+            print (f"\n{design_2*2} AZURE BAY HOTEL {design_2*2}")
             break
         else:
-            print("Invalid Input! Please try again.")
+            print("\nInvalid Input! Please try again.")
 
 main()
