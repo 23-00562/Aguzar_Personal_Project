@@ -557,7 +557,7 @@ def user_menu(username):
         elif choice == "3":
             current_rented_room(username)
         elif choice == "4":
-            perform_check_out(username)  # Renamed the function to avoid conflict with variable name
+            perform_check_out(username)
         elif choice == "5":
             cash_in(username)
         elif choice == "6":
