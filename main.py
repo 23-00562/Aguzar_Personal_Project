@@ -185,7 +185,7 @@ def available_room():
             price = details["Price"]
             print(f"Room Size: {room}")
             print(f"Available Units: {available}")
-            print(f"Daily Rate: {price}")
+            print(f"Daily Rate: ₱{price}")
             print(design_1*3)
         
         print("\nDELUXE ROOMS")
@@ -195,7 +195,7 @@ def available_room():
             price = details["Price"]
             print(f"Room Size: {room}")
             print(f"Available: {available}")
-            print(f"Price: {price}")
+            print(f"Price: ₱{price}")
             print(design_1*3)
 
 def check_dates():
@@ -277,8 +277,8 @@ def book_room(username):
 
 def current_rented_room(username):
     print (f"\n{design_1 * 3} CURRENT RENTED ROOM {design_1 * 3}")
-    print ("\nTo Check in, please proceed to the front desk.")
-    for username, details in user_accounts.items():
+    if username in user_accounts:
+        details = user_accounts[username]
         if details["room_rented"]:
             print(f"\n{username} rented a room.\n")
             for key, value in details["room_rented"].items():
@@ -287,6 +287,8 @@ def current_rented_room(username):
                 print(f"{key}: {value}")
         else:
             print(f"\n{username} has no rented room.")
+    else:
+        print(f"\n{username} is not a valid user.")
 
 def return_room(username):
     if user_accounts[username]["room_rented"]:
@@ -342,7 +344,7 @@ def cash_in (username):
             else:
                     user_accounts [username] ["balance"] += amount
                     print(f"Successfully cashed in ₱{amount}.")
-                    print(f"\nCurrent balance for {username}: ₱{user_accounts[username]["balance"]}.")
+                    print(f"\nCurrent balance for {username}: ₱{user_accounts[username]["balance"]}")
                     break
         except ValueError as e:
             print (f"\nAn error occured: {e}")
@@ -422,7 +424,7 @@ def add_branch():
                             price = int(input("\nEnter the price of the room: "))
                             hotel_info[room_type][branch][room_size]["Available"] = amount
                             hotel_info[room_type][branch][room_size]["Price"] = price
-                            print(f"\n{amount} rooms has been added to {room_size} Room, {room_type} Type in {branch} Branch with a price of {price} per unit.") 
+                            print(f"\n{amount} rooms has been added to {room_size} Room, {room_type} Type in {branch} Branch with a price of ₱{price} per unit.") 
                 elif modify_branch.lower() == "n":
                     return
                 else:
@@ -482,7 +484,7 @@ def edit_price_room():
             else:
                 price = float(input("\nEnter the new daily rate: "))
                 hotel_info[room_type][branch][room_size]["Price"] = price
-                print(f"\nPrice of {room_size} Room, {room_type} Type in {branch} Branch has been updated to {price} per unit.")  
+                print(f"\nPrice of {room_size} Room, {room_type} Type in {branch} Branch has been updated to ₱{price} per unit.")  
 
 def remove_branch():
     print(f"\n{design_3*2} REMOVE BRANCH {design_3*2}")
@@ -499,10 +501,10 @@ def remove_branch():
         print(f"\n{branch} Branch has been removed.")  
 
 def display_time():
-        current_date = now.strftime('%Y-%m-%d')
-        current_time = now.strftime('%H:%M:%S')
-        print(f"\nDate: {current_date}")
-        print(f"Time: {current_time}")
+    current_date = now.strftime('%Y-%m-%d')
+    current_time = now.strftime('%H:%M:%S')
+    print(f"\nDate: {current_date}")
+    print(f"Time: {current_time}")
 
 def hotel_header():
     print (f'\n{design_3*6}')
