@@ -1,4 +1,5 @@
 from datetime import datetime
+import os 
 
 # Current date and time
 now = datetime.now()
@@ -48,6 +49,9 @@ design_3 = '-' * 10
 # Admin login credentials
 admin_username = "admin"
 admin_password = "adminhotel01"
+
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 def register():
     hotel_header()
@@ -203,17 +207,17 @@ def check_dates():
             global check_in
             global check_out
             check_in = input("\nEnter Check-in Date (YYYY-MM-DD): ")
-            if datetime.strptime(check_in, "%Y-%m-%d") < now: 
-                print("Check-in date should be greater than or equal to the present date.") 
+            now = datetime.now().strftime("%Y-%m-%d")
+            if check_in < now:
+                print("Check-in date should be greater than the present date.")
             else:
                 check_out = input("Enter Check-out Date (YYYY-MM-DD): ")
-                if datetime.strptime(check_out, "%Y-%m-%d") <= datetime.strptime(check_in, "%Y-%m-%d"):
+                if check_out <= check_in:
                     print("Check-out date should be greater than the check-in date.")
                 else:
                     break
         except ValueError as e:
-            print (f"\nAn error occured: {e}")
-
+            print(f"\nAn error occurred: {e}")
 
 def book_room(username):
     print (f"\n{design_1 * 3} BOOK A ROOM {design_1 * 3}")
@@ -261,7 +265,7 @@ def book_room(username):
                                     }
                                     print (f"\n{design_1 * 7}")
                                     print("\nYou have successfully booked a room!")
-                                    print(f"\nYou have paid ₱{price}.")
+                                    print(f"\nYou have paid ₱{price}")
                                     print(f"You have earned ₱{cashback} cashback. ")
                                     print(f"Your current balance is ₱{user_accounts[username]['balance']}")
                                     print("\nTo see further details proceed to 'View Current Rented Room'.")
@@ -350,11 +354,11 @@ def cash_in (username):
 
 def view_wallet(username):
     print (f"\n{design_1 * 3} VIEW WALLET {design_1 * 3}")
-    print(f"\nCurrent balance for {username}: ₱{user_accounts[username]['balance']}.")
+    print(f"\nCurrent balance for {username}: ₱{user_accounts[username]['balance']}")
 
 def view_cashback(username):
     print (f"\n{design_1 * 3} VIEW CASHBACK {design_1 * 3}")
-    print(f"\nCurrent accumulated cashbacks for {username}: ₱{user_accounts[username]['cashback']}.")
+    print(f"\nCurrent accumulated cashbacks for {username}: ₱{user_accounts[username]['cashback']}")
 
 def feedback():
     while True:
@@ -522,16 +526,22 @@ def admin_menu():
         print("6. Exit")
         choice = input("\nEnter the number corresponding to your choice: ")
         if choice == "1":
+            clear_screen()
             available_room()
         elif choice == "2":
+            clear_screen()
             add_branch()
         elif choice == "3":
+            clear_screen()
             modify_room()
         elif choice == "4":
+            clear_screen()
             edit_price_room()
         elif choice == "5":
+            clear_screen()
             remove_branch()
         elif choice == "6":
+            clear_screen()
             print("Exiting Admin Menu. Goodbye!")
             break
         else:
@@ -552,22 +562,31 @@ def user_menu(username):
         print("9. Log Out")
         choice = input("\nEnter your choice: ")
         if choice == "1":
+            clear_screen()
             available_room()
         elif choice == "2":
+            clear_screen()
             book_room(username)
         elif choice == "3":
+            clear_screen()
             current_rented_room(username)
         elif choice == "4":
+            clear_screen()
             perform_check_out(username)
         elif choice == "5":
+            clear_screen()
             cash_in(username)
         elif choice == "6":
+            clear_screen()
             view_wallet(username)
         elif choice == "7":
+            clear_screen()
             view_cashback(username)
         elif choice == "8":
+            clear_screen()
             cancel_reservation(username)
         elif choice == "9":
+            clear_screen()
             print(f"Exiting User Menu. Goodbye {username}!")
             break
         else:
@@ -587,16 +606,22 @@ def main():
         print("\nHow can we assist you today?")
         choice = input("\nEnter the number corresponding to your choice: ")
         if choice == "1":
+            clear_screen()
             register()
         elif choice == "2":
+            clear_screen()
             user_login()
         elif choice == "3":
+            clear_screen()
             admin_login()
         elif choice == "4":
+            clear_screen()
             hotel_amenities()
         elif choice == "5":
+            clear_screen()
             view_feedback()
         elif choice == "6":
+            clear_screen()
             print("\nThank you for staying with us. Have a Nice Day! Goodbye!")
             print (f"\n{design_2*2} AZURE BAY HOTEL {design_2*2}")
             break
