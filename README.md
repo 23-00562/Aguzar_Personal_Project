@@ -1,7 +1,7 @@
 # 🏨Azure Bay Hotel Management System
 
 ## Introduction
-The Azure Bay Hotel Management System is a comprehensive Python-based application designed to streamline the operations of a hotel, providing efficient management of bookings, room availability, user accounts, and administrative tasks. This system offers a user-friendly interface for both guests and administrators, enhancing the overall experience of managing hotel operations.
+The **Azure Bay Hotel Management System** is an _advanced Python-based application_ designed to revolutionize the management of hotel operations. Developed by **Joel Lazernie A. Aguzar** as part of the academic requirements for **CS 121: Advanced Computer Programming** under the guidance of **Prof. Francis Jesmar P. Montalbo**, this project showcases exceptional proficiency in Python programming and software development principles. The system aims to streamline hotel operations, including bookings, room availability, user accounts, and administrative tasks, while providing a seamless experience for both guests and administrators.
 
 ## Features
 1. **User Management:**
@@ -54,5 +54,5 @@ The Azure Bay Hotel Management System is a comprehensive Python-based applicatio
 6. Register as a new user or log in using existing credentials to access user-specific functionalities such as room booking, check-in/out, etc. 🔑
 
 ## Contributors
-- This project, developed and maintained by **Joel Lazernnie A. Aguzar**, was created as an academic requirement for CS 121: Advanced Computer Programming under the supervision of Prof. Francis Jesmar Montalbo. The project aims to demonstrate proficiency in Python programming and software development through the implementation of a comprehensive hotel management system.
+- This project, developed and maintained by **Joel Lazernie A. Aguzar**, was created as an academic requirement for **CS 121: Advanced Computer Programming** under the supervision of **Prof. Francis Jesmar P. Montalbo**. The project aims to demonstrate proficiency in Python programming and software development through the implementation of a comprehensive hotel management system.
 - Contributions, suggestions, and feedback from the community are welcome and encouraged to enhance the functionality and usability of the system. 🙌
