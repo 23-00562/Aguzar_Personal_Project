@@ -4,15 +4,7 @@ now = datetime.now()
 
 feedbacks = {}
 
-user_accounts ={"joel": {
-                        "password": "12345678",
-                        "full_name": "dbsljdb",
-                        "contact_number": "contact_number",
-                        "balance": 10000000.00,
-                        "cashback":0.00,
-                        "room_rented": {}
-                    }
-                }
+user_accounts ={}
 
 hotel_branches = ["Baguio", "Manila", "Batangas"]
 
