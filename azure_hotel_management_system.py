@@ -1,13 +1,18 @@
 from datetime import datetime
 
+# Current date and time
 now = datetime.now()
 
+# Initializing feedbacks dictionary to store customer feedback
 feedbacks = {}
 
+# Initializing user_accounts dictionary to store user account information
 user_accounts ={}
 
+# List of hotel branches
 hotel_branches = ["Baguio", "Manila", "Batangas"]
 
+# Nested dictionary containing hotel room information
 hotel_info = {
     "Standard": {
         hotel_branches[0]: {"Single": {"Available": 17, "Price": 549}, 
@@ -34,11 +39,13 @@ hotel_info = {
     }
 }
 
+# Strings for formatting and design
 spacing = " " * 19
 design_1 = '~' * 10
 design_2 = '=' * 10
 design_3 = '-' * 10
 
+# Admin login credentials
 admin_username = "admin"
 admin_password = "adminhotel01"
 
@@ -52,7 +59,7 @@ def register():
                 return
             else:
                 password = str(input("Enter a Password (at least 8 characters): "))
-                if len(password) < 8:
+                if len(password) < 8: # Check if the password is less than 8 characters
                     print("\nTry Again! Password must be at least 8 characters long.")
                 else:
                     full_name = input ("Enter your Full Name: ")
@@ -196,8 +203,8 @@ def check_dates():
             global check_in
             global check_out
             check_in = input("\nEnter Check-in Date (YYYY-MM-DD): ")
-            if datetime.strptime(check_in, "%Y-%m-%d") < now:
-                print("Check-in date should be greater than or equal to the present date.")
+            if datetime.strptime(check_in, "%Y-%m-%d") < now: 
+                print("Check-in date should be greater than or equal to the present date.") 
             else:
                 check_out = input("Enter Check-out Date (YYYY-MM-DD): ")
                 if datetime.strptime(check_out, "%Y-%m-%d") <= datetime.strptime(check_in, "%Y-%m-%d"):
@@ -238,9 +245,9 @@ def book_room(username):
                                 price = hotel_info[room_type][branch][room_size]["Price"]* days_stay
                                 if balance > price:
                                     user_accounts[username]["balance"] -= price
-                                    cashback = price * 0.10
-                                    user_accounts[username]["balance"] += cashback
-                                    user_accounts[username]["cashback"] += cashback
+                                    cashback = price * 0.10 # Calculate 10% cashback by multiplying the price by 0.10
+                                    user_accounts[username]["balance"] += cashback # Add cashback to the user's balance
+                                    user_accounts[username]["cashback"] += cashback 
                                     hotel_info[room_type][branch][room_size]["Available"] -= 1
                                     user_accounts[username]["room_rented"] = {
                                         "Date Booked": now.strftime("%Y-%m-%d %H:%M:%S"),
@@ -363,7 +370,7 @@ def feedback():
                     print("Invalid rating! Please rate from 1 to 5 stars.")
                 else:
                     if user in feedbacks:
-                        feedbacks[user].append(rating)
+                        feedbacks[user].append(rating) # Append the rating to the user's feedback if the user has already given feedback
                     else:
                         feedbacks[user] = [rating]
                     print("\nThank you for your feedback!")
@@ -379,8 +386,8 @@ def view_feedback():
     print("\nFeedbacks: ")
     if feedbacks:
         for user, ratings in feedbacks.items():
-            average_rating = sum(ratings) / len(ratings)
-            print(f"\n{user}: {'★ ' * int(average_rating)}")
+            average_rating = sum(ratings) / len(ratings) # Calculate the average rating
+            print(f"\n{user}: {'★ ' * int(average_rating)}") # Display stars based on the average rating
     else:
         print("Sorry, there is no available feedback yet.")
 
@@ -487,14 +494,14 @@ def remove_branch():
     elif branch not in hotel_branches:
         print("\nBranch not found! Please try again.")
     else:
-        hotel_branches.remove(branch)
-        hotel_info["Standard"].pop(branch)
-        hotel_info["Deluxe"].pop(branch)
+        hotel_branches.remove(branch) 
+        hotel_info["Standard"].pop(branch) 
+        hotel_info["Deluxe"].pop(branch) 
         print(f"\n{branch} Branch has been removed.")  
 
 def display_time():
-    current_date = now.strftime('%Y-%m-%d')
-    current_time = now.strftime('%H:%M:%S')
+    current_date = now.strftime('%Y-%m-%d') # Format the current date to 'YYYY-MM-DD'
+    current_time = now.strftime('%H:%M:%S') # Format the current time to 'HH:MM:SS'
     print(f"\nDate: {current_date}")
     print(f"Time: {current_time}")
 
