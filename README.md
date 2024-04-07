@@ -1,7 +1,7 @@
 # 🏨Azure Bay Hotel Management System
 
 ## Introduction
-The Azure Bay Hotel Management System is a comprehensive Python-based application designed to streamline the operations of a hotel, providing efficient management of bookings, room availability, user accounts, and administrative tasks. This system offers a user-friendly interface for both guests and administrators, enhancing the overall experience of managing hotel operations.
+The **Azure Bay Hotel Management System** is an _advanced Python-based application_ designed to revolutionize the management of hotel operations. Developed by **Joel Lazernie A. Aguzar** as part of the academic requirements for **CS 121: Advanced Computer Programming** under the guidance of **Prof. Francis Jesmar P. Montalbo**, this project showcases exceptional proficiency in Python programming and software development principles. The system aims to streamline hotel operations, including bookings, room availability, user accounts, and administrative tasks, while providing a seamless experience for both guests and administrators.
 
 ## Features
 1. **User Management:**
@@ -33,26 +33,26 @@ The Azure Bay Hotel Management System is a comprehensive Python-based applicatio
    - **Branch Information:** Users can access information about different branches of the hotel, including location details and available facilities. 📍
    - **Explore Hotel Amenities:** Users can explore the amenities available in different types of rooms (Standard, Deluxe) across various branches of the hotel. 🏊‍♂️
 
-8. **Feedback and Rating System:**
+8. **Feedback and Rating System**
    - **Customer Feedback:** Administrators can view feedback provided by customers and their ratings, facilitating continuous improvement of services and guest satisfaction. 📝⭐
 
-## Implementation:
+## Implementation
 - The system is implemented using Python programming language, leveraging its simplicity and versatility. 🐍
 - Data structures like dictionaries are utilized to store user accounts, hotel information, feedbacks, etc., ensuring efficient data management. 🗃️
 - Object-oriented programming principles are incorporated to encapsulate functionalities into modular and reusable components. 🔄
 - Exception handling mechanisms are implemented to handle errors gracefully and ensure smooth user interaction. ⚠️
 
-## Dependencies:
+## Dependencies
 - The system is designed to minimize external dependencies and relies solely on Python's standard library for its functionality. 📦
 
-## Usage:
+## Usage
 1. Clone or download the repository containing the source code files.
 2. Ensure Python (version 3.x recommended) is installed on your system.
-3. Run the `hotel_management_system.py` file using a Python interpreter to launch the application.
+3. Run the `azure_hotel_management_system.py` file using a Python interpreter to launch the application.
 4. Follow the on-screen instructions and prompts to navigate through different functionalities.
 5. Use the admin interface to perform administrative tasks, manage rooms, branches, etc.
 6. Register as a new user or log in using existing credentials to access user-specific functionalities such as room booking, check-in/out, etc. 🔑
 
-## Contributors:
-- This project, developed and maintained by **Joel Lazernnie A. Aguzar**, was created as an academic requirement for CS 121: Advanced Computer Programming under the supervision of Prof. Francis Jesmar Montalbo. The project aims to demonstrate proficiency in Python programming and software development through the implementation of a comprehensive hotel management system.
+## Contributors
+- This project, developed and maintained by **Joel Lazernie A. Aguzar**, was created as an academic requirement for **CS 121: Advanced Computer Programming** under the supervision of **Prof. Francis Jesmar P. Montalbo**. The project aims to demonstrate proficiency in Python programming and software development through the implementation of a comprehensive hotel management system.
 - Contributions, suggestions, and feedback from the community are welcome and encouraged to enhance the functionality and usability of the system. 🙌
