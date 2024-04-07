@@ -48,7 +48,7 @@ The Azure Bay Hotel Management System is a comprehensive Python-based applicatio
 ## Usage:
 1. Clone or download the repository containing the source code files.
 2. Ensure Python (version 3.x recommended) is installed on your system.
-3. Run the `hotel_management_system.py` file using a Python interpreter to launch the application.
+3. Run the `azure_hotel_management_system.py` file using a Python interpreter to launch the application.
 4. Follow the on-screen instructions and prompts to navigate through different functionalities.
 5. Use the admin interface to perform administrative tasks, manage rooms, branches, etc.
 6. Register as a new user or log in using existing credentials to access user-specific functionalities such as room booking, check-in/out, etc. 🔑
