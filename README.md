@@ -39,7 +39,7 @@ The **Azure Bay Hotel Management System** is an _advanced Python-based applicati
 ## Implementation
 - The system is implemented using Python programming language, leveraging its simplicity and versatility. 🐍
 - Data structures like dictionaries are utilized to store user accounts, hotel information, feedbacks, etc., ensuring efficient data management. 🗃️
-- Object-oriented programming principles are incorporated to encapsulate functionalities into modular and reusable components. 🔄
+- Funtional programming principles are incorporated to encapsulate functionalities into modular and reusable components. 🔄
 - Exception handling mechanisms are implemented to handle errors gracefully and ensure smooth user interaction. ⚠️
 
 ## Dependencies
